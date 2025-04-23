@@ -5,6 +5,7 @@ import { Network } from "./config/networks";
 
 const ALCHEMY_API_KEY = vars.get("ALCHEMY_API_KEY");
 const PRIVATE_KEY = vars.get("PRIVATE_KEY");
+const ARBISCAN_API_KEY = vars.get("ARBISCAN_API_KEY");
 
 function alchemyUrl(network: Network) {
   return `https://${network}.g.alchemy.com/v2/${ALCHEMY_API_KEY}`;
@@ -18,9 +19,32 @@ function getNetwork(network: Network) {
 }
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.28",
+  solidity: {
+    version: "0.8.28", // Your Solidity version
+    settings: {
+      optimizer: {
+        enabled: true, // Enable optimization
+        runs: 200, // Set the number of optimization runs (200 is a common balance)
+      },
+    },
+  },
   networks: {
     arbitrumSepolia: getNetwork(Network.ARBITRUM_SEPOLIA),
+  },
+  etherscan: {
+    apiKey: {
+      arbitrumSepolia: ARBISCAN_API_KEY,
+    },
+    customChains: [
+      {
+        network: "arbitrumSepolia",
+        chainId: 421614,
+        urls: {
+          apiURL: "https://api-sepolia.arbiscan.io/api",
+          browserURL: "https://sepolia.arbiscan.io/",
+        },
+      },
+    ],
   },
 };
 

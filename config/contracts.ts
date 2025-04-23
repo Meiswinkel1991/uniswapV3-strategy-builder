@@ -12,3 +12,12 @@ export const deployedPluginContracts: PluginContractDeployments = {
       "0x9955190000000000000000000000000000000000",
   },
 };
+
+export const uniswapV3Contracts: {
+  [key in Network]?: { [key in string]: string };
+} = {
+  [Network.ARBITRUM_SEPOLIA]: {
+    swapRouterV2: "0x101F443B4d1b059569D643917553c771E1b9663E",
+    positionManager: "0x6b2937Bde17889EDCf8fbD8dE31C3C2a70Bc4d65",
+  },
+};
